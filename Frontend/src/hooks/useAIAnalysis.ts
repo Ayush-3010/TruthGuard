@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "https://truthguard-backend-production.up.railway.app";
 
-interface AnalysisResult {
+export interface AnalysisResult {
     type: string;
     credibilityScore: number;
     analysis: string;
@@ -34,19 +34,36 @@ export const useAIAnalysis = () => {
         setIsAnalyzing(true);
         resetResults();
         try {
+            console.log('Making request to:', `${API_URL}/analyze/text`);
             const response = await fetch(`${API_URL}/analyze/text`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text }),
             });
+            
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+            
+            const text_response = await response.text();
+            console.log('Response text:', text_response);
+            
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || "Text analysis failed.");
+                throw new Error(`HTTP ${response.status}: ${text_response || 'Unknown error'}`);
             }
-            const data = await response.json();
+            
+            if (!text_response.trim()) {
+                throw new Error('Empty response from server');
+            }
+            
+            const data = JSON.parse(text_response);
             setResults(data.result);
         } catch (err: any) {
-            setError(err.message);
+            console.error('Analysis error:', err);
+            if (err.message.includes('JSON')) {
+                setError('Server returned invalid response. Please try again.');
+            } else {
+                setError(err.message || 'Analysis failed');
+            }
         } finally {
             setIsAnalyzing(false);
         }
@@ -61,14 +78,21 @@ export const useAIAnalysis = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ url }),
             });
+            
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || "URL analysis failed.");
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
+            
+            const text_response = await response.text();
+            if (!text_response) {
+                throw new Error('Empty response from server');
+            }
+            
+            const data = JSON.parse(text_response);
             setResults(data.result);
         } catch (err: any) {
-            setError(err.message);
+            console.error('Analysis error:', err);
+            setError(err.message || 'Analysis failed');
         } finally {
             setIsAnalyzing(false);
         }
@@ -87,13 +111,19 @@ export const useAIAnalysis = () => {
             });
             
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || "Image analysis failed.");
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
+            
+            const text_response = await response.text();
+            if (!text_response) {
+                throw new Error('Empty response from server');
+            }
+            
+            const data = JSON.parse(text_response);
             setResults(data.result);
         } catch (err: any) {
-            setError(err.message);
+            console.error('Analysis error:', err);
+            setError(err.message || 'Analysis failed');
         } finally {
             setIsAnalyzing(false);
         }
