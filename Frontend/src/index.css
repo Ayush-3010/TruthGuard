@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* TruthGuard Design System - Dark cosmic theme with cyan accents */
+
+@layer base {
+  :root {
+    /* Dark cosmic theme */
+    --background: 220 27% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 20% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 20% 12%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Cyan primary colors */
+    --primary: 180 100% 50%;
+    --primary-foreground: 220 27% 6%;
+
+    --secondary: 220 20% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 20% 8%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 280 100% 70%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 20% 20%;
+    --input: 220 20% 15%;
+    --ring: 180 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom design tokens */
+    --cyber-glow: 180 100% 50%;
+    --purple-accent: 280 100% 70%;
+    --glass-bg: 220 20% 12% / 0.6;
+    --particle-color: 180 100% 50% / 0.3;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(180 100% 50%), hsl(280 100% 70%));
+    --gradient-bg: linear-gradient(135deg, hsl(220 27% 6%), hsl(240 25% 8%));
+    --gradient-card: linear-gradient(135deg, hsl(220 20% 12% / 0.8), hsl(240 20% 10% / 0.6));
+
+    /* Shadows and glows */
+    --shadow-glow: 0 0 40px hsl(var(--cyber-glow) / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(220 20% 4% / 0.8);
+    --shadow-button: 0 0 20px hsl(var(--cyber-glow) / 0.4);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: all 0.4s ease-in-out;
+  }
+}
+
+/* Particle animation keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px hsl(var(--cyber-glow) / 0.4); }
+  50% { box-shadow: 0 0 40px hsl(var(--cyber-glow) / 0.8), 0 0 60px hsl(var(--cyber-glow) / 0.4); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Utility classes */
+.glass-morphism {
+  background: hsl(var(--glass-bg));
+  backdrop-filter: blur(20px);
+  border: 1px solid hsl(var(--border));
+}
+
+.cyber-glow {
+  box-shadow: var(--shadow-glow);
+  transition: var(--transition-glow);
+}
+
+.cyber-glow:hover {
+  box-shadow: 0 0 60px hsl(var(--cyber-glow) / 0.6);
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: hsl(var(--particle-color));
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.gradient-text {
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--cyber-glow));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--cyber-glow) / 0.8);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
