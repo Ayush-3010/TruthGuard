@@ -98,7 +98,7 @@ const ContentAnalyzer = () => {
             <span className="gradient-text">Content Analyzer</span>
           </h2>
           <p className="text-xl text-foreground/70">
-            Verify text, images, or URLs instantly
+            Verify news, images, or URLs instantly
           </p>
         </div>
 
