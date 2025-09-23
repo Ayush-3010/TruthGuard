@@ -116,7 +116,7 @@ const ContentAnalyzer = () => {
                     className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                   >
                     <FileText className="w-4 h-4 mr-2" />
-                    Text Analysis
+                    News Analysis
                   </TabsTrigger>
                   <TabsTrigger
                     value="image"
